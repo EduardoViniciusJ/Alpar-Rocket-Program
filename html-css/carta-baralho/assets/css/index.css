@@ -142,3 +142,85 @@ main {
     background-color: #3b82f6;
     color: #ffffff;
 }
+
+@media (max-width: 1024px) {
+
+    .card {
+        width: 200px;
+        height: 310px;
+    }
+
+    .queen {
+        width: 100px;
+    }
+
+    .value {
+        font-size: 32px;
+    }
+
+    .naipe-top,
+    .naipe-bottom {
+        width: 24px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .navbar {
+        justify-content: center;
+    }
+
+    .navbar ul {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .card {
+        width: 170px;
+        height: 270px;
+    }
+
+    .queen {
+        width: 85px;
+    }
+
+    .value {
+        font-size: 26px;
+    }
+
+    .naipe-top {
+        top: 55px;
+        left: 10px;
+        width: 20px;
+    }
+
+    .naipe-bottom {
+        bottom: 55px;
+        right: 10px;
+        width: 20px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .card {
+        width: 150px;
+        height: 240px;
+    }
+
+    .queen {
+        width: 70px;
+    }
+
+    .value {
+        font-size: 22px;
+    }
+
+    .navbar li a {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+}
