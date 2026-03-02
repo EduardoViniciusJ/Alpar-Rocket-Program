@@ -132,3 +132,84 @@ input[type="checkbox"] {
 .btn-comprar:hover {
     background-color: #16a34a;
 }
+
+
+
+@media (max-width: 1024px) {
+
+    body {
+        grid-template-areas:
+            "header"
+            "menu"
+            "main"
+            "footer";
+
+        grid-template-columns: 1fr;
+        grid-template-rows: 70px auto 1fr 60px;
+    }
+
+    aside {
+        padding: 10px 0;
+    }
+
+    .nav-links {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .nav-links li {
+        margin-bottom: 0;
+    }
+
+    .nav-links a {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    .livros-container {
+        max-height: none;
+        overflow-x: auto;
+    }
+
+    .acoes-tabela {
+        justify-content: center;
+    }
+
+    .btn-comprar {
+        width: 100%;
+        font-size: 16px;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .header-navbar {
+        padding: 15px;
+        justify-content: center;
+    }
+
+    .header-navbar h1 {
+        font-size: 18px;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    input[type="checkbox"] {
+        width: 16px;
+    }
+
+}
