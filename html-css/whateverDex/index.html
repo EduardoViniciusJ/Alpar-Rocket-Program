@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.png">
     <link rel="stylesheet" href="assets/css/styles.css">
-
-    <title>Whatever Dex</title>
+    <title>MangáDex</title>
 </head>
 
 
@@ -21,7 +22,8 @@
             <div class="container">
 
                 <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-                    <span class="fw-semibold">MangáDex</span>
+                    <img src="./assets/icons/book-icon.png" style="width: 24px; height: 24px; object-fit: contain;">
+                    <span class="fw-bold" style="line-height: 1;">MangáDex</span>
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -33,33 +35,63 @@
 
                     <ul class="navbar-nav nav-underline ms-3 me-auto mb-2 mt-2">
 
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Início</a>
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link active" href="#">
+                                <i class="bi bi-house-door me-2"></i> Início
+                            </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Biblioteca</a>
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-collection me-2"></i> Biblioteca
+                            </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Atualizações</a>
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-box-arrow-in-down me-2"></i> Importar
+                            </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Histórico</a>
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-clock-history me-2"></i> Histórico
+                            </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Configurações</a>
+                        <li class="nav-item d-flex align-items-center">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-gear me-2"></i> Configurações
+                            </a>
                         </li>
-
                     </ul>
 
                     <form class="d-flex flex-grow-1 mx-4">
-                        <input class="form-control rounded-pill" type="search"
+                        <input id="search-input" class="form-control rounded-pill" type="search"
                             placeholder="Buscar títulos, autores, grupos...">
                     </form>
 
+                    <div class="dropdown">
+                        <a class="btn btn-link text-dark dropdown-toggle d-flex align-items-center p-0" href="#"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                            style="text-decoration: none;">
+                            <i class="bi bi-person-fill"></i>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li>
+                                <h6 class="dropdown-header">Eduardo Vinicius</h6>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sair</a></li>
+                            <li><a class="dropdown-item" href="#">Entrar com outra conta</a></li>
+                            <li><a class="dropdown-item" href="https://eduardoviniciusj.github.io/alpar/"
+                                    target="_blank">Porfólio</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
@@ -74,40 +106,49 @@
 
             <div class="row align-items-center">
 
-                <div class="col-12 col-md-6">
+                <div class="flex-fill">
 
-                    <h1 class="fw-bold mb-3">Atualizações</h1>
+                    <h1 class="fw-bold mb-2">Enciclopédia de Mangás</h1>
 
-                    <p class="text-muted">
-                        Explore os mangás mais recentes adicionados à plataforma.
-                        O MangáDex é uma biblioteca online onde você pode descobrir,
-                        acompanhar e ler mangás de diversos gêneros atualizados
-                        constantemente pela comunidade.
+                    <p class="text-dark text-secondary">
+                        O seu <strong>catálogo definitivo</strong> para mapear e registrar cada obra descoberta.
+                        Muito mais que uma estante, esta é a sua <strong>interface de dados</strong> para organizar
+                        sua jornada de
+                        leitura em um só lugar.
+                    </p>
+
+                    <p class="text-dark text-secondary">
+                        Registre novos títulos com precisão, organize sua <strong>mangá dex</strong> por
+                        categorias e mantenha
+                        o rastro de cada capítulo finalizado.
+                        Guarde suas histórias favoritas, catalogue cada detalhe e torne-se o <strong>maior
+                            mestre da
+                            biblioteca global de todos os tempos!</strong>
                     </p>
 
                 </div>
 
-                <div class="col-12 col-md-6">
+                <div class="flex-fill">
 
-                    <ul class="nav nav-underline justify-content-md-end flex-wrap gap-4">
-
+                    <ul
+                        class=" navbar-nav nav-underline ms-3 me-auto mb-2 mt-2 flex-nowrap flex-row justify-content-end">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Todos</a>
+                            <a class="nav-link filter-link active" href="#" data-filter="Todos"><i
+                                    class="bi bi-book"></i>
+                                Todos</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Lendo</a>
+                            <a class="nav-link filter-link" href="#" data-filter="Lendo"><i class="bi bi-book-half"></i>
+                                Lendo</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Concluídos</a>
+                            <a class="nav-link filter-link" href="#" data-filter="Finalizado"><i
+                                    class="bi bi-book-fill"></i> Concluídos</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Favoritos</a>
+                            <a class="nav-link filter-link" href="#" data-filter="Favorito"><i class="bi bi-star"></i>
+                                Favoritos</a>
                         </li>
-
-
                     </ul>
 
                 </div>
@@ -115,93 +156,43 @@
             </div>
 
 
-            <section class="row g-4 mt-3">
+            <section id="manga-container" class="row g-4 mt-3">
+            </section>
 
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="card manga-card h-100 border-0 shadow-sm">
-                        <img src="./assets/images/one-piece.jpg" class="card-img-top" alt="Capa do mangá">
-                        <div class="card-body">
-                            <h5 class="card-title fw-semibold mb-2">One Piece</h5>
-                            <p class="text-secondary small">
-                                A jornada épica de Monkey D. Luffy e sua tripulação enquanto exploram os mares.
-                            </p>
-
-                            <div class="row row-cols-2 small mt-3 text-nowrap">
-                                <div>
-                                    <span class="text-muted small">Autor</span>
-                                    <span class="fw-medium">Eiichiro Oda</span>
-                                </div>
-                                <div>
-                                    <span class="text-muted small">Capítulos</span>
-                                    <span class="fw-medium">1100</span>
-                                </div>
-                                <div>
-                                    <span class="text-muted small">Nota</span>
-                                    <span class="fw-medium">⭐ 9.5</span>
-                                </div>
-                                <div>
-                                    <span class="text-muted small">Ano</span>
-                                    <span class="fw-medium">1997</span>
-                                </div>
-                            </div>
-
-                            <div class="d-flex flex-wrap gap-2 mt-1">
-                                <span class="badge bg-danger-subtle text-danger">Shounen</span>
-                                <span class="badge bg-success-subtle text-success">Em andamento</span>
-                                <span class="badge bg-primary-subtle text-primary">Lendo</span>
-                                <span class="badge bg-warning-subtle text-dark">Favorito</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        <nav class="mt-3" aria-label="Paginação de mangás">
-
-            <ul class="pagination justify-content-center">
-
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" aria-label="Anterior">
-                        &laquo;
-                    </a>
-                </li>
-
-                <li class="page-item active">
-                    <a class="page-link" href="#">
-                        1
-                    </a>
-                </li>
-
-                <li class="page-item">
-                    <a class="page-link" href="#">
-                        2
-                    </a>
-                </li>
-
-                <li class="page-item">
-                    <a class="page-link" href="#">
-                        3
-                    </a>
-                </li>
-
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Próxima">
-                        &raquo;
-                    </a>
-                </li>
-
-            </ul>
-
-        </nav>
+            <nav class="mt-3" aria-label="Paginação de mangás">
+                <ul class="pagination justify-content-center">
+                </ul>
+            </nav>
 
     </main>
 
-    <footer class="bg-white text-dark text-center py-3 border-top text-muted shadow-sm">
-        <p class="mb-0">
-            &copy; 2026 MangásDex
-        </p>
+    <footer class="bg-white text-dark py-1 border-top text-muted shadow-sm">
+        <div class="container text-center">
+
+            <div class="mb-1">
+                <a href="https://github.com/EduardoViniciusJ/alpar" class="text-dark fs-4" target="_blank"
+                    title="Ver repositório">
+                    <i class="bi bi-github"></i>
+                </a>
+            </div>
+
+            <div class="mb-1">
+                <a href="https://eduardoviniciusj.github.io/alpar/" class="text-muted text-decoration-none small mx-2"
+                    target="_blank">Portfólio</a>
+                <span class="text-secondary opacity-50 small">|</span>
+                <a href="https://github.com/EduardoViniciusJ" class="text-muted text-decoration-none small mx-2"
+                    target="_blank">Perfil
+                    GitHub</a>
+            </div>
+
+            <p class="mb-0 small">
+                &copy; 2026 <strong>MangásDex</strong>
+            </p>
+        </div>
     </footer>
 
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 
