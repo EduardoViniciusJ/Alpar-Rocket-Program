@@ -10,11 +10,11 @@
     <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.png">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>Painel</title>
+    <title>Painel CyberTech</title>
 
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -25,11 +25,11 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="menu">
-                    <ul class="navbar-nav ms-auto gap-4">
+                    <ul class="navbar-nav ms-auto gap-auto">
 
                         <li class="nav-tem">
                             <a class="nav-link position-relative me-3" href="#">
-                                Status do Sistema
+                                Status
                                 <span
                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                     9+
@@ -49,62 +49,59 @@
         </nav>
     </header>
 
-    <main class="min-vh-100 d-flex flex-column">
-
-        <div class="container mt-3">
-            <div id="alertaSucesso" class="alert alert-success alert-dismissible fade show text-center" role="alert">
-                <strong>Bem-vindo ao Sistema de Operações de Segurança!</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <main class="flex-grow-1 d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-center mb-4 mt-4">
+                <div class="col-md-10 col-lg-8">
+                    <div id="alertaSucesso"
+                        class="alert alert-success alert-dismissible fade show text-center shadow-sm" role="alert">
+                        <strong>Bem-vindo ao Sistema de Operações de Segurança!</strong> <button type="button"
+                            class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="container flex-grow-1 d-flex align-items-center justify-content-center">
-            <div class="row gap-4 py-4 w-100 justify-content-center">
-
-                <div class="card shadow-sm" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <i class="bi bi-shield-slash text-primary fs-1"></i>
-                        <h5 class="card-title mt-3">Pentest</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Teste de Intrusão</h6>
-                        <p class="card-text">Simule ataques reais para identificar e corrigir falhas antes que
-                            cibercriminosos as explorem.</p>
-                        <span class="badge bg-danger mb-3">Crítico</span>
-                        <br>
-                        <a href="#" class="btn btn-outline-primary">Iniciar Teste</a>
+            <div class="row justify-content-center gap-4">
+                <div class="col-auto">
+                    <div class="card shadow-sm text-center" style="width: 18rem;">
+                        <div class="card-body">
+                            <i class="bi bi-shield-slash text-primary fs-1"></i>
+                            <h5 class="card-title mt-3">Pentest Web</h5>
+                            <p class="card-text text-muted">Testes de invasão em aplicações para identificar falhas.</p>
+                            <span class="badge bg-danger mb-3">Crítico</span>
+                            <a href="#" class="btn btn-primary d-block">Iniciar</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <i class="bi bi-bug text-primary fs-1"></i>
-                        <h5 class="card-title mt-3">Vulnerabilidades</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Análise de Riscos</h6>
-                        <p class="card-text">Escaneie ativos de rede e aplicações em busca de portas abertas e softwares
-                            desatualizados.</p>
-                        <span class="badge bg-warning text-dark mb-3">9 Encontradas</span>
-                        <br>
-                        <a href="#" class="btn btn-primary">Ver Relatório</a>
+                <div class="col-auto">
+                    <div class="card shadow-sm text-center" style="width: 18rem;">
+                        <div class="card-body">
+                            <i class="bi bi-bug text-primary fs-1"></i>
+                            <h5 class="card-title mt-3">Redes</h5>
+                            <p class="card-text text-muted">Análise de segurança em infraestrutura corporativa.</p>
+                            <span class="badge bg-warning text-dark mb-3">9 Alertas</span>
+                            <a href="#" class="btn btn-primary d-block">Relatório</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card shadow-sm" style="width: 18rem;">
-                    <div class="card-body text-center">
-                        <i class="bi bi-incognito text-primary fs-1"></i>
-                        <h5 class="card-title mt-3">Forense Digital</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Resposta a Incidentes</h6>
-                        <p class="card-text">Investigação detalhada após invasões para contenção de danos e coleta de
-                            evidências digitais.</p>
-                        <span class="badge bg-info mb-3">Monitorando</span>
-                        <br>
-                        <a href="#" class="btn btn-outline-primary">Investigar</a>
+                <div class="col-auto">
+                    <div class="card shadow-sm text-center" style="width: 18rem;">
+                        <div class="card-body">
+                            <i class="bi bi-incognito text-primary fs-1"></i>
+                            <h5 class="card-title mt-3">Forense</h5>
+                            <p class="card-text text-muted">Investigação detalhada e coleta de evidências.</p>
+                            <span class="badge bg-info mb-3">Ativo</span>
+                            <a href="#" class="btn btn-primary d-block">Investigar</a>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
 
-    <footer class="bg-white text-dark py-1 border-top text-muted shadow-sm">
+    <footer class="bg-white text-dark py-1 border-top text-muted shadow-sm mt-3">
         <p class="m-3 small">
             &copy; 2026 <strong>Painel</strong>
         </p>
