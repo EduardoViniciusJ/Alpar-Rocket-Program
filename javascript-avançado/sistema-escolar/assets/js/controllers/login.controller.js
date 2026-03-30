@@ -1,6 +1,7 @@
 const auth = new Auth();
 
 const form = document.getElementById("loginForm");
+const errorMessage = document.getElementById("errorMessage");
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -8,5 +9,17 @@ form.addEventListener("submit", (event) => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    auth.login(email, password);
+    if (errorMessage) {
+        errorMessage.classList.add("d-none");
+        errorMessage.textContent = "";
+    }
+
+    try {
+        auth.login(email, password);
+    } catch (error) {
+        if (errorMessage) {
+            errorMessage.textContent = error.message;
+            errorMessage.classList.remove("d-none");
+        }
+    }
 });

@@ -1,4 +1,3 @@
-
 class Auth {
     #users = [];
 
@@ -27,7 +26,7 @@ class Auth {
 
         localStorage.setItem("loggedUser", JSON.stringify(sessionData));
 
-        window.location.href = "dashborard.html";
+        window.location.href = "dashboard.html";
     }
 
 
