@@ -1,38 +1,80 @@
 angular.module('app').controller('AppController', [
-  '$scope', 
-  'UsuarioService', 
+  '$scope',
+  'UsuarioService',
   function($scope, UsuarioService) {
-    
-    $scope.mensagemBoasVindas = 'Bem-vindo ao sistema de gerenciamento de usuários da escola!';
-    $scope.usuarios = UsuarioService.listar();
-    
-    $scope.novoUsuario = {
+    function usuarioPadrao() {
+      return {
         nome: '',
-        tipo: 'Aluno'
+        tipo: 'Aluno',
+        email: ''
+      };
+    }
+
+    $scope.mensagemBoasVindas = 'Bem-vindo ao sistema de gerenciamento de usuarios da escola!';
+    $scope.usuarios = UsuarioService.listar();
+    $scope.novoUsuario = usuarioPadrao();
+    $scope.salvando = false;
+    $scope.mensagemSucesso = '';
+    $scope.mensagemErro = '';
+
+    $scope.prepararFormulario = function() {
+      $scope.mensagemErro = '';
     };
 
-    // adicionar usuário
-    $scope.adicionarUsuario = function() {
-        if (!$scope.novoUsuario.nome || !$scope.novoUsuario.nome.trim()) {
-            return;
-        }
+    $scope.limparFormulario = function(formulario) {
+      $scope.novoUsuario = usuarioPadrao();
 
-        UsuarioService.adicionar({
-            nome: $scope.novoUsuario.nome.trim(),
-            tipo: $scope.novoUsuario.tipo,
-            dataCadastro: new Date()
+      if (formulario) {
+        formulario.$setPristine();
+        formulario.$setUntouched();
+      }
+    };
+
+    $scope.fecharModalCadastro = function() {
+      const modalElement = document.getElementById('registrarUsuarioModal');
+
+      if (!modalElement || !window.bootstrap) {
+        return;
+      }
+
+      window.bootstrap.Modal.getOrCreateInstance(modalElement).hide();
+    };
+
+    $scope.adicionarUsuario = async function(formulario) {
+      $scope.mensagemSucesso = '';
+      $scope.mensagemErro = '';
+
+      if (formulario.$invalid) {
+        formulario.nome.$setTouched();
+        formulario.email.$setTouched();
+        return;
+      }
+
+      $scope.salvando = true;
+      $scope.$applyAsync();
+
+      try {
+        const usuarioSalvo = await UsuarioService.salvar({
+          nome: $scope.novoUsuario.nome.trim(),
+          tipo: $scope.novoUsuario.tipo,
+          email: $scope.novoUsuario.email.trim(),
+          dataCadastro: new Date()
         });
 
-        // reseta o formulário
-        $scope.novoUsuario = {
-            nome: '',
-            tipo: 'Aluno'
-        };
+        $scope.mensagemSucesso = 'Usuario ' + usuarioSalvo.nome + ' cadastrado com sucesso.';
+        $scope.limparFormulario(formulario);
+        $scope.fecharModalCadastro();
+      } catch (erro) {
+        $scope.mensagemErro = erro.message || 'Nao foi possivel salvar o usuario.';
+      } finally {
+        $scope.salvando = false;
+        $scope.$applyAsync();
+      }
     };
 
-    // remover usuário
-    $scope.removerUsuario = function(index) {
-        UsuarioService.remover(index);
+    $scope.removerUsuario = async function(index) {
+      await UsuarioService.remover(index);
+      $scope.$applyAsync();
     };
   }
 ]);

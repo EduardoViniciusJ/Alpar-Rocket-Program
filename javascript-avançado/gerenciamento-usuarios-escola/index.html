@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" lang="en">
+<html ng-app="app" lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,33 +36,28 @@
     </div>
 
 
-      <section class="card shadow-sm border-0 mb-4">
+    <section class="card shadow-sm border-0 mb-4">
         <div class="card-body">
-            <h3 class="h5 mb-3">Adicionar Novo Usuario</h3>
-            <form ng-submit="adicionarUsuario()">
-                <div class="row g-3 align-items-end">
-                    <div class="col-12 col-md-6">
-                        <label for="nomeUsuario" class="form-label">Nome</label>
-                        <input
-                            id="nomeUsuario"
-                            type="text"
-                            class="form-control"
-                            ng-model="novoUsuario.nome"
-                            placeholder="Digite o nome do usuario"
-                            required>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <label for="tipoUsuario" class="form-label">Tipo</label>
-                        <select id="tipoUsuario" class="form-select" ng-model="novoUsuario.tipo">
-                            <option value="Aluno">Aluno</option>
-                            <option value="Professor">Professor</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-2 d-grid">
-                        <button type="submit" class="btn btn-success">Adicionar</button>
-                    </div>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <div>
+                    <h3 class="h5 mb-1">Cadastro de Usuarios</h3>
+                    <p class="text-muted mb-0">Registre novos alunos e professores pelo modal.</p>
                 </div>
-            </form>
+                <button
+                    type="button"
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#registrarUsuarioModal"
+                    ng-click="prepararFormulario()">
+                    Registrar
+                </button>
+            </div>
+            <div class="alert alert-success mt-3 mb-0" ng-show="mensagemSucesso">
+                {{ mensagemSucesso }}
+            </div>
+            <div class="alert alert-danger mt-3 mb-0" ng-show="mensagemErro">
+                {{ mensagemErro }}
+            </div>
         </div>
     </section>
 
@@ -112,6 +107,7 @@
                     <h3 class="h5 card-title text-uppercase mb-3">{{ usuario.nome }}</h3>
                     <p class="card-text mb-2"><strong>Cadastro:</strong> {{ usuario.dataCadastro | date:'dd/MM/yyyy' }}</p>
                     <p class="card-text mb-3"><strong>Tipo:</strong> {{ usuario.tipo }}</p>
+                    <p class="card-text mb-3"><strong>Email:</strong> {{ usuario.email }}</p>
                     <button type="button" class="btn btn-outline-danger w-100" ng-click="removerUsuario($index)">
                         Remover
                     </button>
@@ -127,6 +123,79 @@
     </div>
 </main>
 
+    <div class="modal fade" id="registrarUsuarioModal" tabindex="-1" aria-labelledby="registrarUsuarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form name="usuarioForm" ng-submit="adicionarUsuario(usuarioForm)" novalidate>
+                    <div class="modal-header">
+                        <h2 class="modal-title fs-5" id="registrarUsuarioModalLabel">Registrar Usuario</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" ng-disabled="salvando"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="nomeUsuario" class="form-label">Nome</label>
+                            <input
+                                id="nomeUsuario"
+                                name="nome"
+                                type="text"
+                                class="form-control"
+                                ng-class="{'is-invalid': usuarioForm.nome.$touched && usuarioForm.nome.$invalid}"
+                                ng-model="novoUsuario.nome"
+                                placeholder="Digite o nome do usuario"
+                                required>
+                            <div class="invalid-feedback d-block" ng-show="usuarioForm.nome.$touched && usuarioForm.nome.$error.required">
+                                O nome e obrigatorio.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="emailUsuario" class="form-label">Email</label>
+                            <input
+                                id="emailUsuario"
+                                name="email"
+                                type="email"
+                                class="form-control"
+                                ng-class="{'is-invalid': usuarioForm.email.$touched && usuarioForm.email.$invalid}"
+                                ng-model="novoUsuario.email"
+                                placeholder="Digite o email do usuario"
+                                required>
+                            <div class="invalid-feedback d-block" ng-show="usuarioForm.email.$touched && usuarioForm.email.$error.required">
+                                O email e obrigatorio.
+                            </div>
+                            <div class="invalid-feedback d-block" ng-show="usuarioForm.email.$touched && usuarioForm.email.$error.email">
+                                Informe um email valido.
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tipoUsuario" class="form-label">Tipo</label>
+                            <select
+                                id="tipoUsuario"
+                                name="tipo"
+                                class="form-select"
+                                ng-model="novoUsuario.tipo">
+                                <option value="Aluno">Aluno</option>
+                                <option value="Professor">Professor</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2 text-primary" ng-show="salvando">
+                            <div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>
+                            <span>Carregando...</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" ng-disabled="salvando">Cancelar</button>
+                        <button type="submit" class="btn btn-success" ng-disabled="salvando || usuarioForm.$invalid">
+                            <span ng-show="!salvando">Salvar usuario</span>
+                            <span ng-show="salvando">Salvando...</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-white text-dark py-1 border-top text-muted shadow-sm">
         <p class="m-3 small">
             &copy; 2026 <strong>Eduardo Vinicius</strong>
@@ -136,6 +205,7 @@
 
     <script src="./assets/js/services/user.service.js"></script>
     <script src="./assets/js/controllers/user.controller.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
