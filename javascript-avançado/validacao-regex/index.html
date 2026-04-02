@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validacao Regex</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body class="d-flex flex-column min-vh-100 bg-body-tertiary" ng-controller="ValidacaoController">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#">Validacao Regex</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="menu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../../../index.html">Voltar</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container flex-grow-1 d-flex align-items-center justify-content-center py-4">
+        <div class="row justify-content-center w-100">
+            <div class="col-12 col-md-8 col-lg-6">
+                <section class="card shadow-sm border-0 rounded-4">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="text-center mb-4">
+                            <p class="text-muted mb-0">
+                                Verifique nome, email e CPF com expressoes regulares e receba o resultado na hora.
+                            </p>
+                        </div>
+
+                        <form id="form-validacao" ng-submit="validarFormulario()" novalidate>
+                            <div class="mb-3">
+                                <label for="nome" class="form-label fw-semibold">Nome</label>
+                                <input
+                                    id="nome"
+                                    type="text"
+                                    class="form-control form-control-lg"
+                                    ng-model="formData.nome"
+                                    ng-change="validarCampo('nome')"
+                                    ng-class="classeCampo('nome')"
+                                    placeholder="Digite seu nome completo">
+                                <p class="small fw-semibold mb-0 mt-2" ng-class="classeMensagem('nome')" ng-if="deveMostrarResultado('nome')">
+                                    {{ textoResultado('nome') }}
+                                </p>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label fw-semibold">Email</label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    class="form-control form-control-lg"
+                                    ng-model="formData.email"
+                                    ng-change="validarCampo('email')"
+                                    ng-class="classeCampo('email')"
+                                    placeholder="Digite seu melhor email">
+                                <p class="small fw-semibold mb-0 mt-2" ng-class="classeMensagem('email')" ng-if="deveMostrarResultado('email')">
+                                    {{ textoResultado('email') }}
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="cpf" class="form-label fw-semibold">CPF</label>
+                                <input
+                                    id="cpf"
+                                    type="text"
+                                    class="form-control form-control-lg"
+                                    ng-model="formData.cpf"
+                                    ng-change="validarCampo('cpf')"
+                                    ng-class="classeCampo('cpf')"
+                                    placeholder="000.000.000-00">
+                                <p class="small fw-semibold mb-0 mt-2" ng-class="classeMensagem('cpf')" ng-if="deveMostrarResultado('cpf')">
+                                    {{ textoResultado('cpf') }}
+                                </p>
+                            </div>
+
+                            <button type="submit" class="btn btn-dark btn-lg w-100">
+                                Validar
+                            </button>
+                        </form>
+
+                        <div class="alert alert-success mt-4 mb-0" ng-if="formFoiEnviado && formularioValido">
+                            Todos os campos estao validos. O formulario foi bloqueado para recarregar a pagina, mas passou na validacao.
+                        </div>
+
+                        <div class="alert alert-danger mt-4 mb-0" ng-if="formFoiEnviado && !formularioValido">
+                            Existem campos invalidos. Corrija os dados destacados para continuar.
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white text-dark py-1 border-top text-muted shadow-sm">
+        <p class="m-3 small">
+            &copy; 2026 <strong>Eduardo Vinicius</strong>
+        </p>
+    </footer>
+
+    <script src="./assets/js/services/validacao.service.js"></script>
+    <script src="./assets/js/controllers/validacao.controller.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
