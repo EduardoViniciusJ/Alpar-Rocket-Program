@@ -1,4 +1,9 @@
 angular.module('app').controller('AccountController', function($scope, AuthService, $window) {
+    const ROUTES = {
+        LOGIN: 'index.html',
+        DASHBOARD: 'daily-record.html'
+    };
+
     $scope.auth = {
         mode: 'login',
         login: { email: '', password: '' },
@@ -22,6 +27,16 @@ angular.module('app').controller('AccountController', function($scope, AuthServi
         $scope.auth.feedback.message = message;
     }
 
+    $scope.resetForms = function() {
+        $scope.auth.login = { email: '', password: '' };
+        $scope.auth.register = { username: '', email: '', password: '' };
+        $scope.auth.reset = { email: '', newPassword: '' };
+    };
+
+    $scope.goTo = function(page) {
+        $window.location.href = ROUTES[page];
+    };
+
     $scope.setAuthMode = function(mode) {
         $scope.auth.mode = mode;
         $scope.auth.feedback.message = '';
@@ -32,7 +47,7 @@ angular.module('app').controller('AccountController', function($scope, AuthServi
             AuthService.register($scope.auth.register);
             setFeedback(true, 'Conta criada com sucesso. Faça login para continuar.');
             $scope.auth.mode = 'login';
-            $scope.auth.register = { username: '', email: '', password: '' };
+            $scope.resetForms();
         } catch (error) {
             setFeedback(false, error.message);
         }
@@ -41,10 +56,10 @@ angular.module('app').controller('AccountController', function($scope, AuthServi
     $scope.login = function() {
         try {
             AuthService.login($scope.auth.login.email, $scope.auth.login.password);
-            $scope.auth.login = { email: '', password: '' };
+            $scope.resetForms();
             $scope.auth.feedback.message = '';
             refreshSession();
-            $window.location.href = 'daily-record.html';
+            $scope.goTo('DASHBOARD');
         } catch (error) {
             setFeedback(false, error.message);
         }
@@ -55,7 +70,7 @@ angular.module('app').controller('AccountController', function($scope, AuthServi
             AuthService.resetPassword($scope.auth.reset.email, $scope.auth.reset.newPassword);
             setFeedback(true, 'Senha redefinida com sucesso. Agora você já pode entrar.');
             $scope.auth.mode = 'login';
-            $scope.auth.reset = { email: '', newPassword: '' };
+            $scope.resetForms();
         } catch (error) {
             setFeedback(false, error.message);
         }
@@ -65,13 +80,17 @@ angular.module('app').controller('AccountController', function($scope, AuthServi
         AuthService.logout();
         refreshSession();
         $scope.auth.mode = 'login';
-        $window.location.href = 'index.html';
+        $scope.goTo('LOGIN');
     };
 
     refreshSession();
 
-    var path = String($window.location.pathname || '').toLowerCase();
-    if (path.indexOf('index.html') !== -1 && AuthService.isAuthenticated()) {
-        $window.location.replace('daily-record.html');
-    }
+    $scope.redirectAuthenticatedUsers = function() {
+        var path = String($window.location.pathname || '').toLowerCase();
+        if (path.indexOf('index.html') !== -1 && AuthService.isAuthenticated()) {
+            $window.location.replace(ROUTES.DASHBOARD);
+        }
+    };
+
+    $scope.redirectAuthenticatedUsers();
 });
