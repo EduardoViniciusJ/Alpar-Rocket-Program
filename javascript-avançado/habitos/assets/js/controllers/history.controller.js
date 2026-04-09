@@ -1,11 +1,4 @@
-angular.module('app').controller('HistoryController', function($scope, DailyRecordService) {
-    const MOOD_OPTIONS = [
-        { value: 1, label: 'Muito triste', emoji: '😢' },
-        { value: 2, label: 'Neutro', emoji: '😐' },
-        { value: 3, label: 'Feliz', emoji: '🙂' },
-        { value: 4, label: 'Muito feliz', emoji: '🤩' }
-    ];
-
+angular.module('app').controller('HistoryController', function($scope, DailyRecordService, MoodService) {
     const FEEDBACK_TYPES = {
         SUCCESS: 'success',
         DANGER: 'danger'
@@ -18,7 +11,7 @@ angular.module('app').controller('HistoryController', function($scope, DailyReco
         moodLevel: '',
         note: ''
     };
-    $scope.moodOptions = MOOD_OPTIONS;
+    $scope.moodOptions = MoodService.getMoodOptions();
     $scope.filters = {
         date: '',
         moodLevel: ''
@@ -42,13 +35,11 @@ angular.module('app').controller('HistoryController', function($scope, DailyReco
     }
 
     $scope.getMoodLabel = function(moodLevel) {
-        const mood = MOOD_OPTIONS.find(option => option.value === Number(moodLevel));
-        return mood ? mood.label : 'Não definido';
+        return MoodService.getMoodLabel(moodLevel);
     };
 
     $scope.getMoodEmoji = function(moodLevel) {
-        const mood = MOOD_OPTIONS.find(option => option.value === Number(moodLevel));
-        return mood ? mood.emoji : '💭';
+        return MoodService.getMoodEmoji(moodLevel);
     };
 
     $scope.getHabitSummary = function(habits) {
@@ -56,8 +47,12 @@ angular.module('app').controller('HistoryController', function($scope, DailyReco
             return 'Sem hábitos';
         }
 
-        const completed = habits.filter(habit => habit.completed);
-        const completedNames = completed.map(habit => habit.name);
+        const completed = habits.filter(function(habit) {
+            return habit.completed;
+        });
+        const completedNames = completed.map(function(habit) {
+            return habit.name;
+        });
 
         if (completed.length === 0) {
             return 'Nenhum concluído';
@@ -71,7 +66,7 @@ angular.module('app').controller('HistoryController', function($scope, DailyReco
         const hasMoodFilter = $scope.filters.moodLevel !== '' && $scope.filters.moodLevel !== null;
         const filterMoodLevel = hasMoodFilter ? Number($scope.filters.moodLevel) : null;
 
-        $scope.filteredRecords = $scope.records.filter(record => {
+        $scope.filteredRecords = $scope.records.filter(function(record) {
             const matchesDate = !filterDate || record.date === filterDate;
             const matchesMood = !hasMoodFilter || record.moodLevel === filterMoodLevel;
             return matchesDate && matchesMood;
@@ -89,10 +84,9 @@ angular.module('app').controller('HistoryController', function($scope, DailyReco
         loadRecords();
     };
 
-    
     $scope.startEdit = function(record) {
         $scope.editingDate = record.date;
-        $scope.editForm.moodLevel = record.moodLevel?.toString() || '';
+        $scope.editForm.moodLevel = (record.moodLevel !== null && record.moodLevel !== undefined) ? record.moodLevel.toString() : '';
         $scope.editForm.note = record.note || '';
         clearFeedback();
     };
