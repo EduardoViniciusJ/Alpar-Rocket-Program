@@ -1,6 +1,14 @@
-angular.module('app').service('HabitService', function() {
+angular.module('app').service('HabitService', function(AuthService) {
     const habits = [];
-    const HABITS_STORAGE_KEY = 'todoflow.habits';
+    const BASE_STORAGE_KEY = 'todoflow.habits';
+
+    function getStorageKey() {
+        const currentUser = AuthService.getCurrentUser();
+        if (!currentUser || !currentUser.email) {
+            return BASE_STORAGE_KEY;
+        }
+        return BASE_STORAGE_KEY + '.' + currentUser.email;
+    }
 
     function saveToStorage() {
         const serializedHabits = habits.map(function(habit) {
@@ -12,11 +20,11 @@ angular.module('app').service('HabitService', function() {
             };
         });
 
-        localStorage.setItem(HABITS_STORAGE_KEY, JSON.stringify(serializedHabits));
+        localStorage.setItem(getStorageKey(), JSON.stringify(serializedHabits));
     }
 
     function loadFromStorage() {
-        const rawData = localStorage.getItem(HABITS_STORAGE_KEY);
+        const rawData = localStorage.getItem(getStorageKey());
 
         if (!rawData) {
             return;
@@ -38,7 +46,7 @@ angular.module('app').service('HabitService', function() {
                 habits.push(habit);
             });
         } catch (error) {
-            localStorage.removeItem(HABITS_STORAGE_KEY);
+            localStorage.removeItem(getStorageKey());
         }
     }
 
