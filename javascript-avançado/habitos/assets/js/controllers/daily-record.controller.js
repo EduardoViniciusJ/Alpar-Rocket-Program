@@ -1,8 +1,9 @@
-angular.module('app').controller('DailyRecordController', function($scope, $timeout, HabitService, DailyRecordService) {
+angular.module('app').controller('DailyRecordController', function($scope, $timeout, HabitService, DailyRecordService, MoodService) {
     $scope.todayRecord = null;
     $scope.recordView = null;
     $scope.note = '';
     $scope.moodLevel = null;
+    $scope.moodOptions = MoodService.getMoodOptions();
     $scope.dailyHabits = [];
     $scope.toast = {
         visible: false,
@@ -11,13 +12,6 @@ angular.module('app').controller('DailyRecordController', function($scope, $time
     };
 
     let toastTimer = null;
-
-    $scope.moodOptions = [
-        { value: 1, label: 'Muito triste', emoji: '\uD83D\uDE22' },
-        { value: 2, label: 'Neutro', emoji: '\uD83D\uDE10' },
-        { value: 3, label: 'Feliz', emoji: '\uD83D\uDE42' },
-        { value: 4, label: 'Muito feliz', emoji: '\uD83E\uDD29' }
-    ];
 
     function buildTodayHabits() {
         const activeHabits = HabitService.getAll().filter(function(habit) {
@@ -85,38 +79,15 @@ angular.module('app').controller('DailyRecordController', function($scope, $time
     };
 
     $scope.getMoodLabel = function(moodLevel) {
-        const mood = $scope.moodOptions.find(function(option) {
-            return option.value === moodLevel;
-        });
-
-        return mood ? mood.label : 'Nao definido';
+        return MoodService.getMoodLabel(moodLevel);
     };
 
     $scope.getMoodEmoji = function(moodLevel) {
-        const mood = $scope.moodOptions.find(function(option) {
-            return option.value === moodLevel;
-        });
-
-        return mood ? mood.emoji : '\uD83D\uDCAD';
+        return MoodService.getMoodEmoji(moodLevel);
     };
 
     $scope.selectMood = function(moodLevel) {
         $scope.moodLevel = moodLevel;
-    };
-
-    $scope.loadTodayHabits = function() {
-        try {
-            const savedRecord = DailyRecordService.saveToday({
-                moodLevel: $scope.moodLevel,
-                note: String($scope.note || '').trim(),
-                habits: buildTodayHabits()
-            });
-
-            applyTodayRecord(savedRecord);
-            $scope.showToast('Habitos sincronizados com sucesso', 'success');
-        } catch (error) {
-            $scope.showToast(error.message, 'danger');
-        }
     };
 
     $scope.saveMoment = function() {

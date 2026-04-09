@@ -1,4 +1,4 @@
-angular.module('app').service('DailyRecordService', function(AuthService) {
+angular.module('app').service('DailyRecordService', function(AuthService, HabitService) {
     const dailyRecords = [];
     const BASE_STORAGE_KEY = 'todoflow.dailyRecords';
 
@@ -136,15 +136,25 @@ angular.module('app').service('DailyRecordService', function(AuthService) {
     this.toggleHabit = function(habitId) {
         const dailyRecord = getOrCreateTodayRecord();
 
-        const habit = dailyRecord.habits.find(function(item) {
+        let habit = dailyRecord.habits.find(function(item) {
             return item.id === Number(habitId);
         });
 
         if (!habit) {
-            throw new Error('Hábito não encontrado');
-        }
+            const habitFromService = HabitService.getById(habitId);
+            if (!habitFromService) {
+                throw new Error('Hábito não encontrado');
+            }
 
-        habit.completed = !habit.completed;
+            habit = {
+                id: habitFromService.id,
+                name: habitFromService.name,
+                completed: true
+            };
+            dailyRecord.habits.push(habit);
+        } else {
+            habit.completed = !habit.completed;
+        }
 
         saveToStorage();
         return dailyRecord;
